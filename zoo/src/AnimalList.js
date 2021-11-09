@@ -2,20 +2,38 @@ import React, { useState } from "react";
 
 const AnimalList = () => {
   const animals = [
-    { id: 1, type: "sisar", name: "medved", date: new Date(2000, 10, 10) },
-    { id: 2, type: "vodozemac", name: "zaba", date: new Date(2010, 10, 10) },
-    { id: 3, type: "sisar", name: "majmun", date: new Date(2015, 10, 10) },
+    { id: 1, type: "sisar", name: "medved", date: new Date() },
+    { id: 2, type: "vodozemac", name: "zaba", date: new Date() },
+    { id: 3, type: "sisar", name: "majmun", date: new Date() },
     { id: 4, type: "kicmenjak", name: "guster" },
     {
       id: 5,
       type: "kicmenjak",
       name: "krokodil",
-      date: new Date(2008, 10, 10),
+      date: new Date(),
     },
   ];
 
   const [listAnimals, setAnimals] = React.useState(animals);
+  const [type, setType] = useState("");
+  const [name, setName] = useState("");
+  const [birthDate, setBirthDate] = useState(new Date());
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(listAnimals.length);
+    const newAnimal = {
+      id: listAnimals.length + 1,
+      type: type,
+      name: name,
+      date: new Date(birthDate.toString()),
+    };
+    const newList = listAnimals;
+    console.log(newAnimal);
+    newList.push(newAnimal);
+    console.log(newList);
+    setAnimals(newList);
+  };
   const remove = (id) => {
     const newList = listAnimals.filter((item) => item.id !== id);
     setAnimals(newList);
@@ -30,7 +48,41 @@ const AnimalList = () => {
   };
   return (
     <div>
-      <h1>To do:</h1>
+      <div>
+        <form onSubmit={handleSubmit}>
+          <label>
+            Enter type:
+            <input
+              type="text"
+              value={type}
+              onChange={(e) => {
+                setType(e.target.value);
+              }}
+            />
+          </label>
+          <label>
+            Enter name:
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+            />
+          </label>
+          <label>
+            Enter birth date:
+            <input
+              type="date"
+              value={birthDate}
+              onChange={(e) => {
+                setBirthDate(e.target.value);
+              }}
+            />
+          </label>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
       <ul>
         {listAnimals.map((item, index) => (
           <li key={index}>
