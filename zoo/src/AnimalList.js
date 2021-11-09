@@ -13,18 +13,18 @@ const AnimalList = () => {
       date: new Date(),
     },
   ];
-
   const [listAnimals, setAnimals] = React.useState(animals);
   const [type, setType] = useState("");
   const [name, setName] = useState("");
+  const [selectedType, setSelectedType] = useState("");
   const [birthDate, setBirthDate] = useState(new Date());
-
+  const selectType = (e) => setSelectedType([e.target.value]);
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(listAnimals.length);
     const newAnimal = {
       id: listAnimals.length + 1,
-      type: type,
+      type: selectedType,
       name: name,
       date: new Date(birthDate.toString()),
     };
@@ -70,6 +70,15 @@ const AnimalList = () => {
               }}
             />
           </label>
+          <select
+            defaultValue={selectedType}
+            onChange={(e) => selectType(e)}
+            className="browser-default custom-select"
+          >
+            <option value="ptice">ptice</option>
+            <option value="zmije">zmije</option>
+            <option value="macke">macke</option>
+          </select>
           <label>
             Enter birth date:
             <input
@@ -83,6 +92,7 @@ const AnimalList = () => {
           <button type="submit">Submit</button>
         </form>
       </div>
+
       <ul>
         {listAnimals.map((item, index) => (
           <li key={index}>
