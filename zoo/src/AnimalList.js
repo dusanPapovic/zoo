@@ -21,17 +21,19 @@ const AnimalList = () => {
     setAnimals(newList);
   };
   const moveToTop = (id) => {
-    const newList = listAnimals.filter((item) => item.id !== id);
-    const selectedAnimal = listAnimals.filter((item) => item.id === id);
-    newList.concat(selectedAnimal);
+    const newList = listAnimals.filter((item, index) => item.id !== id);
+    const selectedAnimal = listAnimals.filter((item) => item.id === id)[0];
+    console.log(selectedAnimal);
+    console.log(newList);
+    newList.unshift(selectedAnimal);
     setAnimals(newList);
   };
   return (
     <div>
       <h1>To do:</h1>
       <ul>
-        {listAnimals.map((item) => (
-          <li key={item.id}>
+        {listAnimals.map((item, index) => (
+          <li key={index}>
             <div>
               {item.type}- {item.name}
             </div>
